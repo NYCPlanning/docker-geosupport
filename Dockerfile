@@ -30,7 +30,7 @@ ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
 
 RUN conda install -c conda-forge gdal\
-    && conda clean
+    && conda clean -a
     
 RUN pip install --upgrade pip\
     && pip install python-geosupport pandas sqlalchemy psycopg2-binary usaddress
