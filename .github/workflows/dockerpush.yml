@@ -1,4 +1,4 @@
-name: Docker
+name: Create geosupport docker image
 on: [push]
 jobs:
   push:
