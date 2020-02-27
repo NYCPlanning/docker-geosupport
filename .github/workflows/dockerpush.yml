@@ -13,6 +13,7 @@ jobs:
           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
           VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
+          
           docker build --build-arg RELEASE=$RELEASE \
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
