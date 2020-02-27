@@ -5,15 +5,15 @@ on: [push]
 jobs:
   push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
       - name: Build image
+        shell: bash
         run: |
           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
           VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
-          
+
           docker build --build-arg RELEASE=$RELEASE \
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
@@ -21,9 +21,11 @@ jobs:
             --tag sptkl/docker-geosupport:$VERSION .
 
       - name: Log into registry
+        shell: bash
         run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets. DOCKER_PASSWORD }} 
 
       - name: Push image
+        shell: bash
         run: |
           docker push sptkl/docker-geosupport:$VERSION
           docker tag sptkl/docker-geosupport:$VERSION sptkl/docker-geosupport:latest
