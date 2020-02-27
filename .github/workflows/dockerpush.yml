@@ -6,24 +6,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Log into registry
-        shell: bash
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets. DOCKER_PASSWORD }} 
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Build image
         shell: bash
         run: |
           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
-          VERSION=$MAJOR.$MINOR.$PATCH
+          export VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
           docker build \
                 --build-arg RELEASE=$RELEASE \
                 --build-arg MAJOR=$MAJOR \
                 --build-arg MINOR=$MINOR \
                 --build-arg PATCH=$PATCH \
-                --tag sptkl/docker-geosupport:${VERSION} .
-          docker image ls
-          docker push sptkl/docker-geosupport:${VERSION}
+                --tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} .
+          docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION}
       - name: Push image
         shell: bash
         run: |
-          docker tag sptkl/docker-geosupport:${VERSION} sptkl/docker-geosupport:latest
-          docker push sptkl/docker-geosupport:latest
+          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
+          docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
