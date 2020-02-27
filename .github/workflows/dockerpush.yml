@@ -11,17 +11,19 @@ jobs:
       - name: Build image
         run: |
           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+          VERSION=$MAJOR.$MINOR.$PATCH
+          echo $VERSION
           docker build --build-arg RELEASE=$RELEASE \
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
             --build-arg PATCH=$PATCH \
-            --tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH .
+            --tag sptkl/docker-geosupport:$VERSION .
 
       - name: Log into registry
         run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets. DOCKER_PASSWORD }} 
 
       - name: Push image
         run: |
-          docker push sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH
-          docker tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH sptkl/docker-geosupport:latest
+          docker push sptkl/docker-geosupport:$VERSION
+          docker tag sptkl/docker-geosupport:$VERSION sptkl/docker-geosupport:latest
           docker push sptkl/docker-geosupport:latest
