@@ -17,14 +17,14 @@ jobs:
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
             --build-arg UPAD=$UPAD \
-            --tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE.$UPAD .
+            --tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD .
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
-          docker push docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE.$UPAD
-          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE.$UPAD \
+          docker push docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD
+          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD \
                       docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:latest
           docker push docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:latest
