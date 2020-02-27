@@ -5,8 +5,6 @@ on: [push]
 jobs:
   push:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: geosupport
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -16,15 +14,14 @@ jobs:
           docker build --build-arg RELEASE=$RELEASE \
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
-            --build-arg UPAD=$UPAD \
-            --tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD .
+            --build-arg PATCH=$PATCH \
+            --tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH .
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: docker login --username ${{ secrets.DOCKER_USER }} --password ${{ secrets. DOCKER_PASSWORD }} 
 
       - name: Push image
         run: |
-          docker push docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD
-          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:$RELEASE-$UPAD \
-                      docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:latest
-          docker push docker.pkg.github.com/nycplanning/docker-geosupport/$IMAGE_NAME:latest
+          docker push sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH
+          docker tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH sptkl/docker-geosupport:latest
+          docker push sptkl/docker-geosupport:latest

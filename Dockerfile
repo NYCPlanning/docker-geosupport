@@ -3,12 +3,12 @@ FROM continuumio/miniconda3:4.7.12
 ARG RELEASE=20a
 ARG MAJOR=20
 ARG MINOR=1
-ARG UPAD=0
+ARG PATCH=0
 
 ENV RELEASE=${RELEASE}
 ENV MAJOR=${MAJOR}
 ENV MINOR=${MINOR}
-ENV UPAD=${UPAD}
+ENV PATCH=${PATCH}
 
 RUN apt update\
     && apt install -y\
@@ -23,7 +23,7 @@ RUN FILE_NAME=linux_geo${RELEASE}_${MAJOR}_${MINOR}.zip\
     && unzip *.zip\
     && rm *.zip
 
-RUN ./update-upad.sh
+RUN ./patch.sh
 
 ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
