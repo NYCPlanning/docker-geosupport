@@ -1,4 +1,4 @@
-name: Docker
+name: Create geosupport docker image
 on: [push]
 jobs:
   push:
@@ -20,8 +20,5 @@ jobs:
                 --build-arg PATCH=$PATCH \
                 --tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} .
           docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION}
-      - name: Push image
-        shell: bash
-        run: |
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
           docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
