@@ -1,4 +1,5 @@
 # docker-geosupport
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/NYCPlanning/docker-geosupport) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/docker-geosupport/Create%20geosupport%20docker%20image)
 
 ## About: 
 This is a repository for dockerized [geosupport](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page) linux desktop version. 
