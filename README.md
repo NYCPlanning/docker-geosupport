@@ -28,3 +28,7 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
 ## Note: 
 1. if there's no UPAD available, set PATCH=0. 
 2. You can find Geosupport desktop edition and UPAD related information on [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page)
+
+## Build log
+### 2020/03/10
+    RELEASE=20a MAJOR=20 MINOR=1 PATCH=1
