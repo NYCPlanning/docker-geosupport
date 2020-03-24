@@ -13,7 +13,7 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
     RELEASE=20a
     MAJOR=20
     MINOR=1
-    PATCH=0
+    PATCH=2
     docker build --file Dockerfile \
             --build-arg RELEASE=$RELEASE \
             --build-arg MAJOR=$MAJOR \
