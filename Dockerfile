@@ -4,6 +4,7 @@ ARG RELEASE=20a
 ARG MAJOR=20
 ARG MINOR=1
 ARG PATCH=0
+ARG PORT=5000
 
 ENV RELEASE=${RELEASE}
 ENV MAJOR=${MAJOR}
@@ -33,6 +34,9 @@ RUN conda install -c conda-forge gdal\
     && conda clean -a
     
 RUN pip install --upgrade pip\
-    && pip install python-geosupport pandas sqlalchemy psycopg2-binary usaddress
+    && pip install -r requirements.txt\
+    && python -m unittest
 
-WORKDIR /
+CMD ["./entrypoint.sh"]
+
+EXPOSE ${PORT}

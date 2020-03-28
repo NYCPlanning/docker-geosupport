@@ -1,0 +1,9 @@
+
+{
+    "name": "geosupport-api",
+    "description": "A flask api using the sptkl/docker-geosupport image",
+    "repository": "https://github.com/NYCPlanning/docker-geosupport.git",
+    "stack": "container",
+    "image": "sptkl/docker-geosupport:latest",
+    "keywords": ["flask", "geosupport", "docker"]
+  }
