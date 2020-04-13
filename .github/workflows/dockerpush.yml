@@ -43,7 +43,7 @@ jobs:
           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
-            sptkl/docker-geosupport:${VERSION}
-          docker push sptkl/docker-geosupport:${VERSION}
-          docker tag sptkl/docker-geosupport:${VERSION} sptkl/docker-geosupport:latest
-          docker push sptkl/docker-geosupport:latest
+            nycplanning/docker-geosupport:${VERSION}
+          docker push nycplanning/docker-geosupport:${VERSION}
+          docker tag nycplanning/docker-geosupport:${VERSION} nycplanning/docker-geosupport:latest
+          docker push nycplanning/docker-geosupport:latest
