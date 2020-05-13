@@ -21,6 +21,12 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
             --build-arg PATCH=$PATCH \
             --tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH .
     ````
+### Build through Issue (prefered method)
+1. Click on the issue icon and make a new issue.
+2. follow the "build" issue template to open an issue.
+3. make sure you specify the versioning info in the issue body.
+4. When github actions finishes building the docker image and pushes the docker image to docker hub, it will automatically comment and close the issue that triggered the task. 
+
 ### Build through CI
 1. make sure you include version specifications in commit message
     ```
@@ -29,7 +35,3 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
 ## Note: 
 1. if there's no UPAD available, set PATCH=0. 
 2. You can find Geosupport desktop edition and UPAD related information on [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page)
-
-## Build log
-### 2020/03/10
-    RELEASE=20a MAJOR=20 MINOR=1 PATCH=1
