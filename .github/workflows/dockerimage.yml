@@ -1,7 +1,6 @@
 name: Create docker image -- issue
 on:
   issues:
-  push:
     types: [opened]
 
 jobs:
