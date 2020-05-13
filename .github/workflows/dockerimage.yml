@@ -8,7 +8,7 @@ jobs:
   build: 
     name: Build
     runs-on: ubuntu-latest
-    if: github.event.issue.author_association == "MEMBER" && contains(github.event.issue.title, "[build]")
+    if: ${{ github.event.issue.author_association == 'MEMBER' && contains(github.event.issue.title, '[build]') }}
     steps: 
       - run: echo "${{ github.event.issue.body }}"
 #   push:
