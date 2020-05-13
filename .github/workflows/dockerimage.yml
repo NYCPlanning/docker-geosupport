@@ -45,3 +45,11 @@ jobs:
           docker push nycplanning/docker-geosupport:${VERSION}
           docker tag nycplanning/docker-geosupport:${VERSION} nycplanning/docker-geosupport:latest
           docker push nycplanning/docker-geosupport:latest
+      - name: Close Issue
+        if: ${{ success() }}
+        uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: |
+            Success! 🎉 Geosupport docker images are now created and pushed to dockerhub.
+            for more details, check https://github.com/NYCPlanning/docker-geosupport/actions/runs/${{ github.run_id }}}
