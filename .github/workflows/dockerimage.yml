@@ -1,0 +1,59 @@
+name: Create geosupport docker image
+on:
+  issues:
+  push:
+    types: [opened]
+
+jobs:
+  skip:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+        - name: Dump GitHub context
+          env:
+            GITHUB_CONTEXT: ${{ toJson(github) }}
+          run: |
+            echo "$GITHUB_CONTEXT"
+#     if: 
+#     steps:
+#       - run: echo "${{ github.event.head_commit.message }}"
+#   push:
+#     needs: skip
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Log into Github registry
+#         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+#       - name: Build image
+#         shell: bash
+#         run: |
+#           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+#           export VERSION=$MAJOR.$MINOR.$PATCH
+#           echo $VERSION
+#           docker build \
+#                 --build-arg RELEASE=$RELEASE \
+#                 --build-arg MAJOR=$MAJOR \
+#                 --build-arg MINOR=$MINOR \
+#                 --build-arg PATCH=$PATCH \
+#                 --tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} .
+#           docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION}
+#       - name: Push image
+#         shell: bash
+#         run: |
+#           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+#           export VERSION=$MAJOR.$MINOR.$PATCH
+#           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
+#             docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
+#           docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
+#       - name: Log into Docker registry
+#         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
+#       - name: Update Dockerhub
+#         shell: bash
+#         run: |
+#           export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+#           export VERSION=$MAJOR.$MINOR.$PATCH
+#           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
+#             nycplanning/docker-geosupport:${VERSION}
+#           docker push nycplanning/docker-geosupport:${VERSION}
+#           docker tag nycplanning/docker-geosupport:${VERSION} nycplanning/docker-geosupport:latest
+#           docker push nycplanning/docker-geosupport:latest
