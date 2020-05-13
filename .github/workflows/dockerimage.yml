@@ -28,7 +28,7 @@ jobs:
       - name: Push image
         shell: bash
         run: |
-          export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+          export $(echo '${{ github.event.issue.body }}' | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
