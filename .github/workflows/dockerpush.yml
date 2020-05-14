@@ -1,14 +1,12 @@
-name: Create geosupport docker image
-on: [push]
-jobs:
-  skip:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: "! contains(github.event.head_commit.message, '[skip ci]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
+name: Create docker image -- Commit
+
+on:
   push:
-    needs: skip
+    branches: master
+
+jobs:
+  push:
+    if: "contains(github.event.head_commit.message, '[build]')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +15,7 @@ jobs:
       - name: Build image
         shell: bash
         run: |
-          export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
           docker build \
@@ -30,7 +28,7 @@ jobs:
       - name: Push image
         shell: bash
         run: |
-          export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
@@ -40,7 +38,7 @@ jobs:
       - name: Update Dockerhub
         shell: bash
         run: |
-          export $(echo '${{ github.event.head_commit.message }}' | sed 's/#.*//g' | xargs)
+          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             nycplanning/docker-geosupport:${VERSION}
