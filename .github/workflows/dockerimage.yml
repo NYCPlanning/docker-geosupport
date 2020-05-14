@@ -14,7 +14,7 @@ jobs:
       - name: Build image
         shell: bash
         run: |
-          export $(echo '${{ github.event.issue.body }}' | sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
           docker build \
@@ -27,7 +27,7 @@ jobs:
       - name: Push image
         shell: bash
         run: |
-          export $(echo '${{ github.event.issue.body }}' | sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
@@ -37,7 +37,7 @@ jobs:
       - name: Update Dockerhub
         shell: bash
         run: |
-          export $(echo '${{ github.event.issue.body }}' | sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             nycplanning/docker-geosupport:${VERSION}
@@ -50,5 +50,6 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           comment: |
-            Success! 🎉 Geosupport docker images are now created and pushed to dockerhub.
+            # Success! 🎉
+            Geosupport docker images are now created and pushed to dockerhub.
             for more details, check https://github.com/NYCPlanning/docker-geosupport/actions/runs/${{ github.run_id }}
