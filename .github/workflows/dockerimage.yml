@@ -1,11 +1,11 @@
 name: Create docker image -- issue
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 jobs:
   push:
-    if: ${{ github.event.issue.author_association == 'MEMBER' && contains(github.event.issue.title, '[build]') }}
+    if: ${{ github.event.issue.author_association == 'MEMBER' && contains(github.event.issue.title, '[build]') && github.event.issue.state == 'open' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,7 +14,7 @@ jobs:
       - name: Build image
         shell: bash
         run: |
-          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d ' ' | tr '\r\n' [:space:] | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           echo $VERSION
           docker build \
@@ -27,7 +27,7 @@ jobs:
       - name: Push image
         shell: bash
         run: |
-          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d ' ' | tr '\r\n' [:space:] | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
@@ -37,7 +37,7 @@ jobs:
       - name: Update Dockerhub
         shell: bash
         run: |
-          export $(printf '${{ github.event.issue.body }}' |tr -d " "| sed 's/#.*//g' | xargs)
+          export $(printf '${{ github.event.issue.body }}' |tr -d ' ' | tr '\r\n' [:space:] | sed 's/#.*//g' | xargs)
           export VERSION=$MAJOR.$MINOR.$PATCH
           docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
             nycplanning/docker-geosupport:${VERSION}
