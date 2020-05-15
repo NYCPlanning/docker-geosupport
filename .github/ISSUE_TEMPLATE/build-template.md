@@ -1,5 +1,5 @@
 ---
-name: Build Template
+name: Build
 about: This issue ised used for triggering a new build
 title: "[build]"
 labels: ''
