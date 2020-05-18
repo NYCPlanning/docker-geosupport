@@ -19,7 +19,7 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
             --build-arg MAJOR=$MAJOR \
             --build-arg MINOR=$MINOR \
             --build-arg PATCH=$PATCH \
-            --tag sptkl/docker-geosupport:$MAJOR.$MINOR.$PATCH .
+            --tag nycplanning/docker-geosupport:$MAJOR.$MINOR.$PATCH .
     ````
 ### Build through Issue (prefered method)
 1. Click on the issue icon and make a new issue.
