@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import re
 import sys
 
 url = "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page"
@@ -11,7 +10,6 @@ releases = [
     for i in table.find_all("th")
     if "Release" in i.string
 ]
-print(releases)
 
 minior_lookup = {
     'a': 1,
