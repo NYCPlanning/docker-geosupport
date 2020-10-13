@@ -15,7 +15,9 @@ jobs:
       DOCKER_USER: ${{ secrets.DOCKER_USER }}
     steps:
       - uses: actions/checkout@v2
+        
       - name: install dependencies
-        run: pip3 install requests bs4
+        run: pip3 install requests beautifulsoup4
+        
       - name: build ...
         run: ./build.sh
