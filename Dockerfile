@@ -33,6 +33,6 @@ RUN conda install -c conda-forge gdal\
     && conda clean -a
     
 RUN pip install --upgrade pip\
-    && pip install python-geosupport pandas sqlalchemy psycopg2-binary usaddress
+    && pip install python-geosupport pandas sqlalchemy psycopg2-binary usaddress jinja2 requests
 
 WORKDIR /
