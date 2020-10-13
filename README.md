@@ -6,6 +6,8 @@ This is a repository for dockerized [geosupport](https://www1.nyc.gov/site/plann
 Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) python binding package for geosupport, we are able to localize our geocoding process. 
 
 ## Instructions: 
+> Note that as of 2020/10/13, the nycplanning/docker-geosupport image will be automatically updated whenever there's a new major rlease or upad release on [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page). Manual updates are still available but discouraged, and will be gradually deprecated.
+
 ### Build on your own machine
 1. Make sure you have docker installed
 2. 
@@ -21,13 +23,13 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
             --build-arg PATCH=$PATCH \
             --tag nycplanning/docker-geosupport:$MAJOR.$MINOR.$PATCH .
     ````
-### Build through Issue (prefered method)
+### Build through Issue (DEPRECATING ...)
 1. Click on the issue icon and make a new issue.
 2. follow the "build" issue template to open an issue.
 3. make sure you specify the versioning info in the issue body.
 4. When github actions finishes building the docker image and pushes the docker image to docker hub, it will automatically comment and close the issue that triggered the task. 
 
-### Build through CI
+### Build through CI (DEPRECATING ...)
 1. make sure you include version specifications in commit message
     ```
     git commit -m 'RELEASE=20a MAJOR=20 MINOR=1 PATCH=0'
