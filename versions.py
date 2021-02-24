@@ -21,7 +21,14 @@ minior_lookup = {
 if len(releases) > 1:
     # If more than 1 item in release
     # then there must be a UPAD present
-    release=max(releases, key=len)
+    # Check if they are the same release
+    r1 = releases[0][2]
+    r2 = releases[1][2]
+    if r1 != r2:
+        release = releases[0]
+    else:
+        release=max(releases, key=len)
+
     if len(release) == 4:
         versions = dict(
             RELEASE=release[:3],

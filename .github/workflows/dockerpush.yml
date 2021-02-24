@@ -5,43 +5,19 @@ on:
     branches: master
 
 jobs:
-  push:
-    if: "contains(github.event.head_commit.message, '[build]')"
+  build:
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[build]')
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_ACTOR: ${{ github.actor }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
     steps:
       - uses: actions/checkout@v2
-      - name: Log into Github registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      - name: Build image
-        shell: bash
-        run: |
-          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
-          export VERSION=$MAJOR.$MINOR.$PATCH
-          echo $VERSION
-          docker build \
-                --build-arg RELEASE=$RELEASE \
-                --build-arg MAJOR=$MAJOR \
-                --build-arg MINOR=$MINOR \
-                --build-arg PATCH=$PATCH \
-                --tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} .
-          docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION}
-      - name: Push image
-        shell: bash
-        run: |
-          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
-          export VERSION=$MAJOR.$MINOR.$PATCH
-          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
-            docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
-          docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
-      - name: Log into Docker registry
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
-      - name: Update Dockerhub
-        shell: bash
-        run: |
-          export $(echo '${{ github.event.head_commit.message }}' | tr -d '[build]' | sed 's/#.*//g' | xargs)
-          export VERSION=$MAJOR.$MINOR.$PATCH
-          docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
-            nycplanning/docker-geosupport:${VERSION}
-          docker push nycplanning/docker-geosupport:${VERSION}
-          docker tag nycplanning/docker-geosupport:${VERSION} nycplanning/docker-geosupport:latest
-          docker push nycplanning/docker-geosupport:latest
+        
+      - name: install dependencies
+        run: pip3 install requests beautifulsoup4
+        
+      - name: build ...
+        run: ./build.sh
