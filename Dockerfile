@@ -18,7 +18,7 @@ RUN apt update\
 WORKDIR /geocode
 COPY . . 
 
-RUN FILE_NAME=linux_geo${RELEASE}_${MAJOR}.${MINOR}.zip\
+RUN FILE_NAME=linux_geo${RELEASE}_${MAJOR}_${MINOR}.zip\
     && echo $FILE_NAME\
     && curl -O https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/$FILE_NAME\
     && unzip *.zip\
