@@ -4,6 +4,7 @@ on:
     - cron: 0 0 * * *
   repository_dispatch:
     types: [docker-geosupport]
+  workflow_dispatch:
   
 jobs:
   build:
