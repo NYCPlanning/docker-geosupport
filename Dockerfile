@@ -1,21 +1,14 @@
-FROM continuumio/miniconda3:4.7.12
+FROM python:3.9-slim
 
 ARG RELEASE=20a
 ARG MAJOR=20
 ARG MINOR=1
 ARG PATCH=0
 
-ENV RELEASE=${RELEASE}
-ENV MAJOR=${MAJOR}
-ENV MINOR=${MINOR}
-ENV PATCH=${PATCH}
-
-RUN apt update\
-    && apt install -y\
-    curl git unzip\
-    && apt autoclean
+RUN apt update && apt install -y curl git unzip zip
 
 WORKDIR /geocode
+
 COPY . . 
 
 RUN FILE_NAME=linux_geo${RELEASE}_${MAJOR}_${MINOR}.zip\
@@ -29,10 +22,6 @@ RUN ./patch.sh
 ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
 
-RUN conda install -c conda-forge gdal\
-    && conda clean -a
-    
-RUN pip install --upgrade pip\
-    && pip install python-geosupport pandas sqlalchemy psycopg2-binary usaddress jinja2 requests
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 WORKDIR /

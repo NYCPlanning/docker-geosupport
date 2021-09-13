@@ -2,9 +2,8 @@ name: Create docker image -- automated
 on:
   schedule:
     - cron: 0 0 * * *
-  repository_dispatch:
-    types: [docker-geosupport]
   workflow_dispatch:
+  push:
   
 jobs:
   build:

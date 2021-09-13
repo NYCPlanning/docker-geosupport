@@ -8,8 +8,8 @@ VERSIONSTRING=$(python3 versions.py)
 export $(echo "$VERSIONSTRING" | sed 's/#.*//g' | xargs)
 export VERSION=$MAJOR.$MINOR.$PATCH
 
-if docker_tag_exists nycplanning/docker-geosupport $VERSION; then
-    echo "nycplanning/docker-geosupport:$VERSION already exist"
+if docker_tag_exists $DOCKER_IMAGE_NAME $VERSION; then
+    echo "$DOCKER_IMAGE_NAME:$VERSION already exist"
 else 
     # State version name
     echo "$VERSIONSTRING"
@@ -18,26 +18,29 @@ else
     # Log into Github registry
     echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
     
+    local GITHUB_IMAGE_NAME=$GITHUB_IMAGE_NAME
+    local DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME
+
     # Build image
     docker build \
         --build-arg RELEASE=$RELEASE \
         --build-arg MAJOR=$MAJOR \
         --build-arg MINOR=$MINOR \
         --build-arg PATCH=$PATCH \
-        --tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} .
-    docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION}
+        --tag $GITHUB_IMAGE_NAME:${VERSION} .
+    docker push $GITHUB_IMAGE_NAME:${VERSION}
 
     # Push image
-    docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
-        docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
-    docker push docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:latest
+    docker tag $GITHUB_IMAGE_NAME:${VERSION} \
+        $GITHUB_IMAGE_NAME:latest
+    docker push $GITHUB_IMAGE_NAME:latest
 
     # Log into Docker registry
     echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USER --password-stdin
     # Update Dockerhub
-    docker tag docker.pkg.github.com/nycplanning/docker-geosupport/geosupport:${VERSION} \
-        nycplanning/docker-geosupport:${VERSION}
-    docker push nycplanning/docker-geosupport:${VERSION}
-    docker tag nycplanning/docker-geosupport:${VERSION} nycplanning/docker-geosupport:latest
-    docker push nycplanning/docker-geosupport:latest
+    docker tag $GITHUB_IMAGE_NAME:${VERSION} \
+        $DOCKER_IMAGE_NAME:${VERSION}
+    docker push $DOCKER_IMAGE_NAME:${VERSION}
+    docker tag $DOCKER_IMAGE_NAME:${VERSION} $DOCKER_IMAGE_NAME:latest
+    docker push $DOCKER_IMAGE_NAME:latest
 fi
