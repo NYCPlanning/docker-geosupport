@@ -8,8 +8,8 @@ VERSIONSTRING=$(python3 versions.py)
 export $(echo "$VERSIONSTRING" | sed 's/#.*//g' | xargs)
 export VERSION=$MAJOR.$MINOR.$PATCH
 
-if docker_tag_exists $DOCKER_IMAGE_NAME $VERSION; then
-    echo "$DOCKER_IMAGE_NAME:$VERSION already exist"
+if docker_tag_exists nycplanning/docker-geosupport $VERSION; then
+    echo "nycplanning/docker-geosupport:$VERSION already exist"
 else 
     # State version name
     echo "$VERSIONSTRING"
@@ -18,9 +18,9 @@ else
     # Log into Github registry
     echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
     
-    local GITHUB_IMAGE_NAME=$GITHUB_IMAGE_NAME
-    local DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME
-
+    local GITHUB_IMAGE_NAME=docker.pkg.github.com/nycplanning/docker-geosupport/geosupport
+    local DOCKER_IMAGE_NAME=nycplanning/docker-geosupport
+    
     # Build image
     docker build \
         --build-arg RELEASE=$RELEASE \
