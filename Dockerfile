@@ -5,7 +5,7 @@ ARG MAJOR=20
 ARG MINOR=1
 ARG PATCH=0
 
-RUN apt update && apt install -y curl git unzip zip
+RUN apt update && apt install -y curl git unzip zip build-essential
 
 WORKDIR /geocode
 
