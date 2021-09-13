@@ -18,8 +18,8 @@ else
     # Log into Github registry
     echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
     
-    local GITHUB_IMAGE_NAME=docker.pkg.github.com/nycplanning/docker-geosupport/geosupport
-    local DOCKER_IMAGE_NAME=nycplanning/docker-geosupport
+    GITHUB_IMAGE_NAME=docker.pkg.github.com/nycplanning/docker-geosupport/geosupport
+    DOCKER_IMAGE_NAME=nycplanning/docker-geosupport
     
     # Build image
     docker build \
