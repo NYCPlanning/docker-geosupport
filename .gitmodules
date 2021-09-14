@@ -1,0 +1,3 @@
+[submodule "python-geosupport"]
+	path = python-geosupport
+	url = https://github.com/NYCPlanning/python-geosupport.git

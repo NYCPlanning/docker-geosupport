@@ -1,8 +1,8 @@
 FROM python:3.9-slim
 
-ARG RELEASE=20a
-ARG MAJOR=20
-ARG MINOR=1
+ARG RELEASE=21c
+ARG MAJOR=21
+ARG MINOR=3
 ARG PATCH=0
 
 RUN apt update && apt install -y curl git unzip zip build-essential
@@ -22,6 +22,8 @@ RUN ./patch.sh
 ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip \
+    && pip install -e python-geosupport/.\
+    && pip install -r requirements.txt
 
 WORKDIR /

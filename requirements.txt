@@ -1,4 +1,3 @@
-python-geosupport 
 pandas
 sqlalchemy
 psycopg2-binary 
