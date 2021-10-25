@@ -16,9 +16,9 @@ else
     echo "$VERSION"
 
     # Log into Github registry
-    echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
+    echo "$GITHUB_TOKEN" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
     
-    GITHUB_IMAGE_NAME=docker.pkg.github.com/nycplanning/docker-geosupport/geosupport
+    GITHUB_IMAGE_NAME=ghcr.io/nycplanning/docker-geosupport/geosupport
     DOCKER_IMAGE_NAME=nycplanning/docker-geosupport
     
     # Build image
