@@ -11,7 +11,7 @@ WORKDIR /geocode
 
 COPY . . 
 
-RUN FILE_NAME=linux_geo${RELEASE}${PATCH}_${MAJOR}_${MINOR}${PATCH}.zip\
+RUN FILE_NAME=linux_geo22a2_22_12.zip\
     && echo $FILE_NAME\
     && curl -O https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/$FILE_NAME\
     && unzip *.zip\
