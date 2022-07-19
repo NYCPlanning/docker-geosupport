@@ -11,7 +11,7 @@ WORKDIR /geocode
 
 COPY . . 
 
-RUN FILE_NAME=linux_geo22a2_22_12.zip\
+RUN FILE_NAME=linux_geo${RELEASE}2_${MAJOR}_${MINOR}2.zip\
     && echo $FILE_NAME\
     && curl -O https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/$FILE_NAME\
     && unzip *.zip\
@@ -19,8 +19,8 @@ RUN FILE_NAME=linux_geo22a2_22_12.zip\
 
 RUN ./patch.sh
 
-ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
+ENV GEOFILES=/geocode/version-${RELEASE}2_${MAJOR}.${MINOR}2/fls/
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}2_${MAJOR}.${MINOR}2/lib/
 
 RUN pip install --upgrade pip \
     && pip install -e python-geosupport/.\
