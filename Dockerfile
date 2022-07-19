@@ -19,8 +19,8 @@ RUN FILE_NAME=linux_geo${RELEASE}${PATCH}_${MAJOR}_${MINOR}${PATCH}.zip\
 
 RUN ./patch.sh
 
-ENV GEOFILES=/geocode/version-${RELEASE}${PATCH}_${MAJOR}.${MINOR}${PATCH}/fls/
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}${PATCH}_${MAJOR}.${MINOR}${PATCH}/lib/
+ENV GEOFILES=/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/fls/
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/geocode/version-${RELEASE}_${MAJOR}.${MINOR}/lib/
 
 RUN pip install --upgrade pip \
     && pip install -e python-geosupport/.\

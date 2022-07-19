@@ -24,6 +24,10 @@ if len(releases) > 1:
     # Check if they are the same release
     r1 = releases[0][2]
     r2 = releases[1][2]
+    print("what are releases", releases)
+    print("what is r1", r1)
+    print("what is r2", r2)
+    
     if r1 != r2:
         release = releases[0]
     else:
