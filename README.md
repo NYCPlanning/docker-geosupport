@@ -23,6 +23,21 @@ Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) pyt
             --build-arg PATCH=$PATCH \
             --tag nycplanning/docker-geosupport:$MAJOR.$MINOR.$PATCH .
     ````
+    
+3. make sure the submodule for `python-geosupport` is updated and available on your local
+
+Pulling repo for the first time and pull files from submodule
+
+```
+git submodule update --init --recursive
+```
+
+Updating submodule
+
+```
+git submodule update --remote
+```
+
 ### Build through Issue (DEPRECATING ...)
 1. Click on the issue icon and make a new issue.
 2. follow the "build" issue template to open an issue.
