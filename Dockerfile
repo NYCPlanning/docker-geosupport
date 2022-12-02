@@ -13,7 +13,7 @@ COPY . .
 
 RUN FILE_NAME=linux_geo${RELEASE}_${MAJOR}_${MINOR}.zip\
     && echo $FILE_NAME\
-    && curl -O https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/$FILE_NAME\
+    && curl -O https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/$FILE_NAME\
     && unzip *.zip\
     && rm *.zip
 
