@@ -11,12 +11,7 @@ releases = [
     if "Release" in i.string
 ]
 
-minior_lookup = {
-    'a': 1,
-    'b': 2, 
-    'c': 3,
-    'd': 4
-}
+minior_lookup = {"a": 1, "b": 2, "c": 3, "d": 4}
 
 if len(releases) > 1:
     # If more than 1 item in release
@@ -27,21 +22,24 @@ if len(releases) > 1:
     if r1 != r2:
         release = releases[0]
     else:
-        release=max(releases, key=len)
+        release = max(releases, key=len)
 
     if len(release) == 4:
         versions = dict(
             RELEASE=release[:3],
             MAJOR=release[:2],
             MINOR=minior_lookup.get(release[2]),
-            PATCH=release[3]
+            PATCH=release[3],
         )
     if len(release) == 3:
         versions = dict(
             RELEASE=release[:3],
             MAJOR=release[:2],
             MINOR=minior_lookup.get(release[2]),
-            PATCH=0
+            PATCH=0,
         )
-    
-    print(f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}", file=sys.stdout)
+
+    print(
+        f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}",
+        file=sys.stdout,
+    )
