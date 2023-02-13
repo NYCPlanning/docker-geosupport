@@ -32,6 +32,7 @@ if len(releases) > 1:
         release = releases[0]
     else:
         release=max(releases, key=len)
+    print("chosen release", release)
 
     if len(release) == 4:
         versions = dict(
