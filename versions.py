@@ -38,7 +38,7 @@ if len(releases) > 1:
             RELEASE=release[:3],
             MAJOR=release[:2],
             MINOR=minior_lookup.get(release[2]),
-            PATCH=9,
+            PATCH=release[3]
         )
     if len(release) == 3:
         versions = dict(
