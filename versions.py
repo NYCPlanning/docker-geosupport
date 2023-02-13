@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 
+MINOR_LETTER_LOOKUP = {"a": 1, "b": 2, "c": 3, "d": 4}
+
 url = "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page"
 soup = BeautifulSoup(requests.get(url).content, features="html.parser")
 table = soup.find_all("table", class_="table table-outline-border")[0]
@@ -11,7 +13,7 @@ releases = [
     if "Release" in i.string
 ]
 
-minior_lookup = {"a": 1, "b": 2, "c": 3, "d": 4}
+print(f"Release titles from Open Data table: {releases}")
 
 if len(releases) > 1:
     # If more than 1 item in release
@@ -19,23 +21,28 @@ if len(releases) > 1:
     # Check if they are the same release
     r1 = releases[0][2]
     r2 = releases[1][2]
+    print(f"{r1=}")
+    print(f"{r2=}")
+    # r1 = releases[0][:3]
+    # r2 = releases[1].split(" ")[-1][:3]  # expecting strings like "upad / tpad  22c4'"
     if r1 != r2:
         release = releases[0]
     else:
         release = max(releases, key=len)
+    print(f"{release=}")
 
     if len(release) == 4:
         versions = dict(
             RELEASE=release[:3],
             MAJOR=release[:2],
-            MINOR=minior_lookup.get(release[2]),
+            MINOR=MINOR_LETTER_LOOKUP.get(release[2]),
             PATCH=release[3],
         )
     if len(release) == 3:
         versions = dict(
             RELEASE=release[:3],
             MAJOR=release[:2],
-            MINOR=minior_lookup.get(release[2]),
+            MINOR=MINOR_LETTER_LOOKUP.get(release[2]),
             PATCH=0,
         )
 
