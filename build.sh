@@ -1,7 +1,13 @@
 #!/bin/bash
+# Exit when any command fails
+set -e
+# Keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# Echo an error message before exiting
+trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
 
 function docker_tag_exists() {
-    curl --silent -f -lSL https://index.docker.io/v1/repositories/$1/tags/$2 > /dev/null
+    curl --silent -f -lSL https://index.docker.io/v1/repositories/$1/tags/$2 >/dev/null
 }
 
 VERSIONSTRING=$(python3 versions.py)
@@ -10,17 +16,17 @@ export VERSION=$MAJOR.$MINOR.$PATCH
 
 if docker_tag_exists nycplanning/docker-geosupport $VERSION; then
     echo "nycplanning/docker-geosupport:$VERSION already exist"
-else 
+else
     # State version name
     echo "$VERSIONSTRING"
     echo "$VERSION"
 
     # Log into Github registry
     echo "$GITHUB_TOKEN" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-    
+
     GITHUB_IMAGE_NAME=ghcr.io/nycplanning/docker-geosupport/geosupport
     DOCKER_IMAGE_NAME=nycplanning/docker-geosupport
-    
+
     # Build image
     docker build \
         --build-arg RELEASE=$RELEASE \
