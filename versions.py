@@ -48,10 +48,11 @@ if __name__ == "__main__":
         # then there must be a UPAD present
         # Check if they are the same release
         primary_release = releases[0]
-        upad_release = releases[1].split(" ")[-1][:3]  # expecting "upad / tpad  22c4"
+        upad_release = releases[1].split(" ")[-1]  # expecting "upad / tpad  22c4"
         upad_primary_release = upad_release[:2]
         print(f"{primary_release=}")
         print(f"{upad_release=}")
+        print(f"{upad_primary_release=}")
 
         if primary_release == upad_primary_release:
             print("Matching Primary and UPAD releases")
