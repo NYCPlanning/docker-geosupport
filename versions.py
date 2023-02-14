@@ -38,7 +38,7 @@ if __name__ == "__main__":
         if "Release" in i.string
     ]
 
-    print(f"Release titles from Open Data table: {releases}")
+    logging.debug(f"Release titles from Open Data table: {releases}")
 
     if len(releases) == 1:
         # only one release section present
