@@ -4,6 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
+IGNORE_UPAD_RELEASE = (
+    False  # TODO this is temporary while primary and UPAD releases are out of sync
+)
+CALLER_ENVIRONMENT_VARIABLE_NAME = "VERSIONSTRING"
 GEOSUPPORT_RELEASE_URL = (
     "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page"
 )
@@ -28,22 +32,40 @@ if __name__ == "__main__":
 
     print(f"Release titles from Open Data table: {releases}")
 
-    if len(releases) > 1:
+    if len(releases) == 1:
+        # only one release section present
+        # no UPAD to incorporate
+        release = releases[0]
+        versions = dict(
+            RELEASE=release[:3],
+            MAJOR=release[:2],
+            MINOR=MINOR_LETTER_LOOKUP.get(release[2]),
+            PATCH=0,
+        )
+    else:
         # If more than 1 item in release
         # then there must be a UPAD present
         # Check if they are the same release
-        r1 = releases[0][2]
-        r2 = releases[1][2]
+        primary_release = releases[0]
+        upad_release = releases[0].split(" ")[-1][
+            :3
+        ]  # expecting strings like "upad / tpad  22c4'"
+
+        r1 = primary_release[-2]
+        r2 = upad_release[-2]
         print(f"{r1=}")
         print(f"{r2=}")
-        # r1 = releases[0][:3]
-        # r2 = releases[1].split(" ")[-1][:3]  # expecting strings like "upad / tpad  22c4'"
         if r1 != r2:
             # posted UPAD is not meant for current release
-            release = releases[0]
+            if IGNORE_UPAD_RELEASE:
+                release = primary_release
+            else:
+                # build for the posted UPAD
+                # TODO this is temporary
+                release = upad_release
         else:
             # UPAD should be incorporated
-            release = releases[1]
+            release = upad_release
         print(f"{release=}")
 
         if len(release) == 4:
@@ -62,5 +84,8 @@ if __name__ == "__main__":
             )
         else:
             raise ValueError(f"Got release string with odd length: {release=}")
-        version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
-        os.environ["VERSIONSTRING"] = version_string
+
+    version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
+    os.environ[CALLER_ENVIRONMENT_VARIABLE_NAME] = version_string
+
+    raise InterruptedError(f"DEBUG\n\t{version_string=}")
