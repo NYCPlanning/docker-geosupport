@@ -12,7 +12,7 @@ logging.basicConfig(
 )
 
 IGNORE_UPAD_RELEASE = (
-    False  # TODO this is temporary while an image with 22c4 UPAD needs to be built
+    True  # TODO this is temporary while an image with 22c4 UPAD needs to be built
 )
 
 CALLER_ENVIRONMENT_VARIABLE_NAME = "VERSIONSTRING"
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         if "Release" in i.string
     ]
 
-    logging.debug(f"Release titles from Open Data table: {releases}")
+    logging.info(f"Release titles from Open Data table: {releases}")
 
     if len(releases) == 1:
         # only one release section present
@@ -58,27 +58,27 @@ if __name__ == "__main__":
         upad_release = releases[1].split(" ")[-1]  # expecting "upad / tpad  22c4"
         upad_primary_release = upad_release[0:3]
 
-        logging.debug(f"{primary_release=}")
-        logging.debug(f"{upad_release=}")
-        logging.debug(f"{upad_primary_release=}")
+        logging.info(f"{primary_release=}")
+        logging.info(f"{upad_release=}")
+        logging.info(f"{upad_primary_release=}")
 
         if primary_release == upad_primary_release:
-            logging.debug("Matching Primary and UPAD's Primary releases")
+            logging.info("Matching Primary and UPAD's Primary releases")
             # UPAD should be incorporated
             release = upad_release
         else:
-            logging.debug("WARNING! Mismatch between posted Primary and UPAD releases")
+            logging.info("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
             # TODO this is temporary while an image with 22c4 UPAD needs to be built
             if IGNORE_UPAD_RELEASE:
-                logging.debug("Ignoring UPAD release")
+                logging.info("Ignoring UPAD release")
                 release = primary_release
             else:
                 # build for the posted UPAD
-                logging.debug("Prioritizing UPAD release")
+                logging.info("Prioritizing UPAD release")
                 release = upad_release
 
-        logging.debug(f"{release=}")
+        logging.info(f"{release=}")
         if len(release) == 4:  # is a UPAD version
             versions = dict(
                 RELEASE=release[:3],
