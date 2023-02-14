@@ -49,7 +49,7 @@ if __name__ == "__main__":
         # Check if they are the same release
         primary_release = releases[0]
         upad_release = releases[1].split(" ")[-1]  # expecting "upad / tpad  22c4"
-        upad_primary_release = upad_release[:2]
+        upad_primary_release = upad_release[0:3]
         print(f"{primary_release=}")
         print(f"{upad_release=}")
         print(f"{upad_primary_release=}")
