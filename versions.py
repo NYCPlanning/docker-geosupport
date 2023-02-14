@@ -2,7 +2,7 @@
 # and set an environment variable
 import requests
 from bs4 import BeautifulSoup
-import os
+import sys
 
 IGNORE_UPAD_RELEASE = (
     False  # TODO this is temporary while an image with 22c4 UPAD needs to be built
@@ -89,4 +89,4 @@ if __name__ == "__main__":
             raise ValueError(f"Got release string with unexpected length: {release=}")
 
     version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
-    os.environ[CALLER_ENVIRONMENT_VARIABLE_NAME] = version_string
+    print(version_string, file=sys.stdout)
