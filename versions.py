@@ -1,8 +1,15 @@
 # Get the relevant release details from the Geosupport Open Data page
 # and set an environment variable
+import sys
+import logging
 import requests
 from bs4 import BeautifulSoup
-import sys
+
+logging.basicConfig(
+    level="INFO",
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 IGNORE_UPAD_RELEASE = (
     False  # TODO this is temporary while an image with 22c4 UPAD needs to be built
@@ -50,27 +57,28 @@ if __name__ == "__main__":
         primary_release = releases[0]
         upad_release = releases[1].split(" ")[-1]  # expecting "upad / tpad  22c4"
         upad_primary_release = upad_release[0:3]
-        print(f"{primary_release=}")
-        print(f"{upad_release=}")
-        print(f"{upad_primary_release=}")
+
+        logging.info(f"{primary_release=}")
+        logging.info(f"{upad_release=}")
+        logging.info(f"{upad_primary_release=}")
 
         if primary_release == upad_primary_release:
-            print("Matching Primary and UPAD's Primary releases")
+            logging.info("Matching Primary and UPAD's Primary releases")
             # UPAD should be incorporated
             release = upad_release
         else:
-            print("WARNING! Mismatch between posted Primary and UPAD releases")
+            logging.info("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
             # TODO this is temporary while an image with 22c4 UPAD needs to be built
             if IGNORE_UPAD_RELEASE:
-                print("Ignoring UPAD release")
+                logging.info("Ignoring UPAD release")
                 release = primary_release
             else:
                 # build for the posted UPAD
-                print("Prioritizing UPAD release")
+                logging.info("Prioritizing UPAD release")
                 release = upad_release
 
-        print(f"{release=}")
+        logging.info(f"{release=}")
         if len(release) == 4:  # is a UPAD version
             versions = dict(
                 RELEASE=release[:3],
