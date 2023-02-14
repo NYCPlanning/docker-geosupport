@@ -4,7 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-IGNORE_UPAD_RELEASE = False  # TODO this is temporary while 2022 UPAD needs to be built
+IGNORE_UPAD_RELEASE = (
+    False  # TODO this is temporary while an image with 22c4 UPAD needs to be built
+)
 
 CALLER_ENVIRONMENT_VARIABLE_NAME = "VERSIONSTRING"
 GEOSUPPORT_RELEASE_URL = (
@@ -58,7 +60,7 @@ if __name__ == "__main__":
         else:
             print("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
-            # TODO this is temporary while 2022 UPAD needs to be built
+            # TODO this is temporary while an image with 22c4 UPAD needs to be built
             if IGNORE_UPAD_RELEASE:
                 print("Ignoring UPAD release")
                 release = primary_release
