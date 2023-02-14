@@ -26,9 +26,11 @@ if len(releases) > 1:
     # r1 = releases[0][:3]
     # r2 = releases[1].split(" ")[-1][:3]  # expecting strings like "upad / tpad  22c4'"
     if r1 != r2:
+        # posted UPAD is not meant for current release
         release = releases[0]
     else:
-        release = max(releases, key=len)
+        # UPAD should be incorporated
+        release = releases[1]
     print(f"{release=}")
 
     if len(release) == 4:
