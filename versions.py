@@ -90,5 +90,3 @@ if __name__ == "__main__":
 
     version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
     os.environ[CALLER_ENVIRONMENT_VARIABLE_NAME] = version_string
-
-    raise InterruptedError(f"DEBUG\n\t{version_string=}")
