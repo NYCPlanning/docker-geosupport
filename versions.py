@@ -4,9 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-IGNORE_UPAD_RELEASE = (
-    False  # TODO this is temporary while primary and UPAD releases are out of sync
-)
+IGNORE_UPAD_RELEASE = False  # TODO this is temporary while 2022 UPAD needs to be built
+
 CALLER_ENVIRONMENT_VARIABLE_NAME = "VERSIONSTRING"
 GEOSUPPORT_RELEASE_URL = (
     "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page"
@@ -52,24 +51,24 @@ if __name__ == "__main__":
         print(f"{primary_release=}")
         print(f"{upad_release=}")
 
-        if primary_release != upad_primary_release:
+        if primary_release == upad_primary_release:
+            print("Matching Primary and UPAD releases")
+            # UPAD should be incorporated
+            release = upad_release
+        else:
             print("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
+            # TODO this is temporary while 2022 UPAD needs to be built
             if IGNORE_UPAD_RELEASE:
                 print("Ignoring UPAD release")
                 release = primary_release
             else:
                 # build for the posted UPAD
-                # TODO this is temporary
                 print("Prioritizing UPAD release")
                 release = upad_release
-        else:
-            print("Matching Primary and UPAD releases")
-            # UPAD should be incorporated
-            release = upad_release
-        print(f"{release=}")
 
-        if len(release) == 4:
+        print(f"{release=}")
+        if len(release) == 4:  # is a UPAD version
             versions = dict(
                 RELEASE=release[:3],
                 MAJOR=release[:2],
@@ -84,7 +83,7 @@ if __name__ == "__main__":
                 PATCH=0,
             )
         else:
-            raise ValueError(f"Got release string with odd length: {release=}")
+            raise ValueError(f"Got release string with unexpected length: {release=}")
 
     version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
     os.environ[CALLER_ENVIRONMENT_VARIABLE_NAME] = version_string
