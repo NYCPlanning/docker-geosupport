@@ -10,7 +10,9 @@ function docker_tag_exists() {
     curl --silent -f -lSL https://index.docker.io/v1/repositories/$1/tags/$2 >/dev/null
 }
 
-VERSIONSTRING=$(python3 versions.py)
+# VERSIONSTRING=$(python3 versions.py)
+python3 versions.py
+
 export $(echo "$VERSIONSTRING" | sed 's/#.*//g' | xargs)
 export VERSION=$MAJOR.$MINOR.$PATCH
 

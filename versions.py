@@ -1,6 +1,8 @@
+# Get the relevant release details from the Geosupport Open Data page
+# and set an environment variable
 import requests
 from bs4 import BeautifulSoup
-import sys
+import os
 
 GEOSUPPORT_RELEASE_URL = (
     "https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page"
@@ -59,7 +61,5 @@ if __name__ == "__main__":
                 PATCH=0,
             )
 
-        print(
-            f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}",
-            file=sys.stdout,
-        )
+        version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
+        os.environ["VERSIONSTRING"] = version_string
