@@ -12,6 +12,7 @@ function docker_tag_exists() {
 
 # VERSIONSTRING=$(python3 versions.py)
 python3 versions.py
+echo "VERSIONSTRING from versions.py is $VERSIONSTRING"
 
 export $(echo "$VERSIONSTRING" | sed 's/#.*//g' | xargs)
 export VERSION=$MAJOR.$MINOR.$PATCH
