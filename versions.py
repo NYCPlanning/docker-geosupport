@@ -48,20 +48,23 @@ if __name__ == "__main__":
         # Check if they are the same release
         primary_release = releases[0]
         upad_release = releases[1].split(" ")[-1][:3]  # expecting "upad / tpad  22c4"
+        upad_primary_release = upad_release[:2]
+        print(f"{primary_release=}")
+        print(f"{upad_release=}")
 
-        r1 = primary_release[2]
-        r2 = upad_release[2]
-        print(f"{r1=}")
-        print(f"{r2=}")
-        if r1 != r2:
+        if primary_release != upad_primary_release:
+            print("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
             if IGNORE_UPAD_RELEASE:
+                print("Ignoring UPAD release")
                 release = primary_release
             else:
                 # build for the posted UPAD
                 # TODO this is temporary
+                print("Prioritizing UPAD release")
                 release = upad_release
         else:
+            print("Matching Primary and UPAD releases")
             # UPAD should be incorporated
             release = upad_release
         print(f"{release=}")
