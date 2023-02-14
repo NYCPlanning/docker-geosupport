@@ -53,13 +53,14 @@ if __name__ == "__main__":
                 MINOR=MINOR_LETTER_LOOKUP.get(release[2]),
                 PATCH=release[3],
             )
-        if len(release) == 3:
+        elif len(release) == 3:
             versions = dict(
                 RELEASE=release[:3],
                 MAJOR=release[:2],
                 MINOR=MINOR_LETTER_LOOKUP.get(release[2]),
                 PATCH=0,
             )
-
+        else:
+            raise ValueError(f"Got release string with odd length: {release=}")
         version_string = f"RELEASE={versions['RELEASE']} MAJOR={versions['MAJOR']} MINOR={versions['MINOR']} PATCH={versions['PATCH']}"
         os.environ["VERSIONSTRING"] = version_string
