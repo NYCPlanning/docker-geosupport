@@ -47,12 +47,10 @@ if __name__ == "__main__":
         # then there must be a UPAD present
         # Check if they are the same release
         primary_release = releases[0]
-        upad_release = releases[0].split(" ")[-1][
-            :3
-        ]  # expecting strings like "upad / tpad  22c4'"
+        upad_release = releases[1].split(" ")[-1][:3]  # expecting "upad / tpad  22c4"
 
-        r1 = primary_release[-2]
-        r2 = upad_release[-2]
+        r1 = primary_release[2]
+        r2 = upad_release[2]
         print(f"{r1=}")
         print(f"{r2=}")
         if r1 != r2:
