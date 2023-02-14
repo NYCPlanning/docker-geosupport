@@ -58,27 +58,27 @@ if __name__ == "__main__":
         upad_release = releases[1].split(" ")[-1]  # expecting "upad / tpad  22c4"
         upad_primary_release = upad_release[0:3]
 
-        logging.info(f"{primary_release=}")
-        logging.info(f"{upad_release=}")
-        logging.info(f"{upad_primary_release=}")
+        logging.debug(f"{primary_release=}")
+        logging.debug(f"{upad_release=}")
+        logging.debug(f"{upad_primary_release=}")
 
         if primary_release == upad_primary_release:
-            logging.info("Matching Primary and UPAD's Primary releases")
+            logging.debug("Matching Primary and UPAD's Primary releases")
             # UPAD should be incorporated
             release = upad_release
         else:
-            logging.info("WARNING! Mismatch between posted Primary and UPAD releases")
+            logging.debug("WARNING! Mismatch between posted Primary and UPAD releases")
             # posted UPAD is not meant for current release
             # TODO this is temporary while an image with 22c4 UPAD needs to be built
             if IGNORE_UPAD_RELEASE:
-                logging.info("Ignoring UPAD release")
+                logging.debug("Ignoring UPAD release")
                 release = primary_release
             else:
                 # build for the posted UPAD
-                logging.info("Prioritizing UPAD release")
+                logging.debug("Prioritizing UPAD release")
                 release = upad_release
 
-        logging.info(f"{release=}")
+        logging.debug(f"{release=}")
         if len(release) == 4:  # is a UPAD version
             versions = dict(
                 RELEASE=release[:3],
