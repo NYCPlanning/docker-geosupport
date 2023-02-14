@@ -55,7 +55,7 @@ if __name__ == "__main__":
         print(f"{upad_primary_release=}")
 
         if primary_release == upad_primary_release:
-            print("Matching Primary and UPAD releases")
+            print("Matching Primary and UPAD's Primary releases")
             # UPAD should be incorporated
             release = upad_release
         else:
