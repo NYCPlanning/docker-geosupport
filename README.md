@@ -1,6 +1,8 @@
 # docker-geosupport
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/NYCPlanning/docker-geosupport) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/docker-geosupport/Create%20geosupport%20docker%20image)
 
+** This repo is now archived **. docker-geosupport image is produced in DCP Data Engineering's [primary repo](https://github.com/NYCPlanning/data-engineering/tree/main/docker/docker-geosupport) now
+
 ## About: 
 This is a repository for dockerized [geosupport](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-gde-home.page) linux desktop version. 
 Thanks to [python-geosupport](https://github.com/ishiland/python-geosupport) python binding package for geosupport, we are able to localize our geocoding process. 
